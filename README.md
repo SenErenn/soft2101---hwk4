@@ -10,7 +10,7 @@ It includes a Java console program that prints numbers between two inputs, then 
 
 feature branches to print only odd or even numbers.
 
-
-
 The goal is to practice clean commits, .gitignore rules, and safe merges.
 
+## Department Website
+[Department of Software Engineering – Işık University](https://www.isikun.edu.tr/akademik/mdbf/bilgisayar-muhendisligi/yazilim-muhendisligi-lisans/yazilim-muhendisligi-lisans)
