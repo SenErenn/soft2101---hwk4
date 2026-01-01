@@ -1,1 +1,288 @@
-HWK4 Answers
+STEP a
+git config --global user.name "SenErenn"
+git config --global user.email "seneren1905@gmail.com"
+git config --global core.editor "notepad"
+git config --global --list
+
+OUTPUT:
+user.name=SenErenn
+user.email=seneren1905@gmail.com
+core.editor=notepad
+
+
+STEP b
+git clone https://github.com/SenErenn/soft2101---hwk4.git
+OUTPUT:
+Cloning into 'soft2101---hwk4'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (3/3), done.
+
+dir
+OUTPUT:
+01.01.2026  22:38    <DIR>          soft2101---hwk4
+(Desktop listing shown)
+
+dir /a
+OUTPUT:
+01.01.2026  22:38    <DIR>          .git
+01.01.2026  22:38                90 README.md
+
+dir .git /a
+OUTPUT:
+config
+description
+HEAD
+hooks
+index
+info
+logs
+objects
+packed-refs
+refs
+
+QUESTION (STEP b): What files or directories are in your local .git directory?
+ANSWER:
+config, description, HEAD, hooks, index, info, logs, objects, packed-refs, refs
+
+
+STEP c
+notepad README.md
+
+git status
+OUTPUT:
+On branch main
+Your branch is up to date with 'origin/main'.
+Changes not staged for commit:
+        modified:   README.md
+
+git add READ.md
+OUTPUT:
+fatal: pathspec 'READ.md' did not match any files
+
+git add README.md
+git commit -m "update README description"
+OUTPUT:
+[main 2cdba2b] update README description
+ 1 file changed, 14 insertions(+)
+
+QUESTION (STEP c): Using markdown, clickable link
+[Department of Software Engineering of Işık University](https://www.isikun.edu.tr/akademik/muhendislik-fakultesi/bolumler-ve-programlar/bilgisayar-muhendisligi/programlar/lisans-programi/yazilim-muhendisligi)
+
+
+STEP d
+.gitignore RULES:
+# Java
+*.class
+*.log
+
+# Build outputs
+bin/
+out/
+target/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+git commit -m "setting up gitignore"
+OUTPUT:
+[main e8532b2] setting up gitignore
+
+(note: file was initially created as .gittignore by mistake, then corrected to .gitignore)
+git commit -m "fix gitignore filename"
+OUTPUT:
+[main 96ccdbe] fix gitignore filename
+
+
+STEP e
+git checkout -b feature-1
+Switched to a new branch 'feature-1'
+mkdir hmk1
+cd hmk1
+dir
+OUTPUT:
+(empty directory)
+
+
+STEP f
+(Java program created and committed on feature-1)
+git add hmk1
+git commit -m "satisfying requirement one"
+OUTPUT:
+[feature-1 9a2a479] satisfying requirement one
+
+QUESTION (STEP f): What are all the commits you’ve made on the feature-1 branch?
+git log --oneline --decorate
+OUTPUT:
+9a2a479 (HEAD -> feature-1) satisfying requirement one
+96ccdbe (origin/main, origin/HEAD, main) fix gitignore filename
+e8532b2 setting up gitignore
+2cdba2b update README description
+10047c0 create homework4.txt
+707a84b Initial commit
+
+QUESTION (STEP f): What files are listed in your hmk1 directory on the feature-1 branch?
+dir hmk1
+OUTPUT:
+RangePrinter.class
+(RangePrinter.java was committed; directory listing shown)
+
+QUESTION (STEP f): What files are listed in your hmk1 directory on the main branch?
+dir hmk1
+OUTPUT:
+File Not Found
+
+
+STEP g
+git merge feature-1
+OUTPUT:
+Fast-forward
+ hmk1/RangePrinter.java | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+ create mode 100644 hmk1/RangePrinter.java
+
+
+STEP j
+(feature-2 changes: odd numbers only)
+git commit -m "satisfying requirement change two"
+OUTPUT:
+[feature-2 170afc0] satisfying requirement change two
+
+QUESTION (STEP j): What are all the commits you’ve made on the feature-2 branch?
+git log --oneline --decorate
+OUTPUT:
+170afc0 (HEAD -> feature-2) satisfying requirement change two
+9a2a479 (origin/main, origin/HEAD, main, feature-3, feature-1) satisfying requirement one
+96ccdbe fix gitignore filename
+e8532b2 setting up gitignore
+2cdba2b update README description
+10047c0 create homework4.txt
+707a84b Initial commit
+
+
+STEP k
+(feature-3 changes: even numbers only)
+git commit -m "satisfying requirement change three"
+OUTPUT:
+[feature-3 1a0aaa5] satisfying requirement change three
+
+
+STEP l
+merge feature-2 into main (main reflects ONLY feature-2 functionality = ODD)
+git merge feature-2
+OUTPUT:
+Fast-forward
+
+findstr /n "i % 2" hmk1\RangePrinter.java
+OUTPUT:
+if (i % 2 != 0) {
+
+
+STEP m
+merge feature-3 into main (resolved conflicts so main reflects feature-3 functionality = EVEN)
+git commit
+OUTPUT:
+[main cccac5a] Merge branch 'feature-3'
+
+findstr /n "i % 2" hmk1\RangePrinter.java
+OUTPUT:
+if (i % 2 == 0) {
+
+QUESTION (STEP m): Differences between main and the other three branches (git diff)
+
+git diff main..feature-1
+OUTPUT:
+diff --git a/hmk1/RangePrinter.java b/hmk1/RangePrinter.java
+index 90a9ffe..6f6d4e4 100644
+--- a/hmk1/RangePrinter.java
++++ b/hmk1/RangePrinter.java
+@@ -7,9 +7,7 @@ public class RangePrinter {
+         int end = Math.max(a, b) - 1;
+         for (int i = start; i <= end; i++) {
+-            if (i % 2 == 0) {
+-                System.out.println(i);
+-            }
++            System.out.println(i);
+         }
+     }
+
+git diff main..feature-2
+OUTPUT:
+diff --git a/hmk1/RangePrinter.java b/hmk1/RangePrinter.java
+index 90a9ffe..667b9bc 100644
+--- a/hmk1/RangePrinter.java
++++ b/hmk1/RangePrinter.java
+@@ -3,15 +3,15 @@ import java.util.Scanner;
+ public class RangePrinter {
+     public static void printNumbersBetween(int a, int b) {
+-        int start = Math.min(a, b) + 1;
+-        int end = Math.max(a, b) - 1;
++    int start = Math.min(a, b) + 1;
++    int end = Math.max(a, b) - 1;
+-        for (int i = start; i <= end; i++) {
+-            if (i % 2 == 0) {
+-                System.out.println(i);
+-            }
++    for (int i = start; i <= end; i++) {
++        if (i % 2 != 0) {
++            System.out.println(i);
+         }
+     }
++}
+
+git diff main..feature-3
+OUTPUT:
+diff --git a/hmk1/RangePrinter.java b/hmk1/RangePrinter.java
+index 90a9ffe..f21f6a2 100644
+--- a/hmk1/RangePrinter.java
++++ b/hmk1/RangePrinter.java
+@@ -3,15 +3,15 @@ import java.util.Scanner;
+ public class RangePrinter {
+     public static void printNumbersBetween(int a, int b) {
+-        int start = Math.min(a, b) + 1;
+-        int end = Math.max(a, b) - 1;
++    int start = Math.min(a, b) + 1;
++    int end = Math.max(a, b) - 1;
+-        for (int i = start; i <= end; i++) {
+-            if (i % 2 == 0) {
+-                System.out.println(i);
+-            }
++    for (int i = start; i <= end; i++) {
++        if (i % 2 == 0) {
++            System.out.println(i);
+         }
+     }
++}
+
+
+STEP n
+git push -u origin main
+OUTPUT:
+Everything up-to-date
+
+git push -u origin feature-1
+OUTPUT:
+[new branch] feature-1 -> feature-1
+
+git push -u origin feature-2
+OUTPUT:
+[new branch] feature-2 -> feature-2
+
+git push -u origin feature-3
+OUTPUT:
+[new branch] feature-3 -> feature-3
+
+
+Repo link:
+https://github.com/SenErenn/soft2101---hwk4
